@@ -2,10 +2,13 @@
 // Bootstrap file
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// Define project root
+define('PROJECT_ROOT', realpath(__DIR__ . '/..'));
+
 // Load environment variables
-$envFile = __DIR__ . '/../.env';
+$envFile = PROJECT_ROOT . '/.env';
 if (!file_exists($envFile)) {
-    $envFile = __DIR__ . '/../.env.example';
+    $envFile = PROJECT_ROOT . '/.env.example';
 }
 
 if (file_exists($envFile)) {
@@ -18,15 +21,17 @@ if (file_exists($envFile)) {
 }
 
 // Start session
-session_save_path(__DIR__ . '/../sessions');
+session_save_path(PROJECT_ROOT . '/sessions');
 if (!is_dir(session_save_path())) {
     mkdir(session_save_path(), 0755, true);
 }
 session_name($_ENV['SESSION_NAME'] ?? 'CAFFEINECRASH_SESSION');
 session_start();
 
-// Initialize database
-\App\Database::getInstance();
+// Set absolute database path if not already set to an absolute path
+if (empty($_ENV['DB_PATH']) || !str_starts_with($_ENV['DB_PATH'], '/')) {
+    $_ENV['DB_PATH'] = PROJECT_ROOT . '/public/data/caffeinecrash.db';
+}
 
 // Helper functions
 function redirect(string $path): void {
@@ -45,6 +50,16 @@ function require_login(): void {
     $auth = new \App\Auth();
     if (!$auth->isLoggedIn()) {
         redirect('/login.php');
+    }
+}
+
+function require_admin(): void {
+    $auth = new \App\Auth();
+    if (!$auth->isLoggedIn() || !$auth->isAdmin()) {
+        redirect('/dashboard.php');
+    }
+    if (!$auth->isTOTPVerified()) {
+        redirect('/admin/totp-verify.php');
     }
 }
 

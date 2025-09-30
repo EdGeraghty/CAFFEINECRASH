@@ -39,32 +39,31 @@ git clone https://github.com/EdGeraghty/CAFFEINECRASH.git
 cd CAFFEINECRASH
 ```
 
-2. Copy the environment configuration:
-```bash
-cp .env.example .env
-```
-
-3. Create necessary directories:
-```bash
-mkdir -p data sessions
-chmod 755 data sessions
-```
-
-4. Start the development server:
+2. Start the development server:
 ```bash
 cd public
 php -S localhost:8000
 ```
 
-5. Open your browser and navigate to `http://localhost:8000`
+3. Open your browser and navigate to `http://localhost:8000`
 
-6. **Complete the installation wizard:**
+4. **Complete the installation wizard:**
    - You'll be automatically redirected to the installation page
    - Create your admin account with a username, email, and password (minimum 8 characters)
+   - Configure application settings (or use the provided defaults):
+     - Application Name
+     - Application URL
+     - Database Path
+     - Session Configuration
+     - Debug Mode
    - Click "Complete Installation"
+   - The wizard will create the `.env` configuration file automatically
    - You'll be logged in automatically as the admin user
 
-**Important:** The admin account created during installation is permanent and will remain even when using demo mode.
+**Important:** 
+- The admin account created during installation is permanent and will remain even when using demo mode.
+- You no longer need to manually copy `.env.example` to `.env` - the installation wizard handles this for you.
+- Directories (`data`, `sessions`) are created automatically as needed.
 
 ## Demo Mode
 

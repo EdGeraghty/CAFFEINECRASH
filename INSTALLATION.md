@@ -93,14 +93,24 @@ The admin user created during installation:
 - Session-based authentication
 - Automatic login after installation reduces friction
 
-### 4. **Installation State Management**
+### 4. **Automated Configuration**
+The installation wizard now creates the `.env` configuration file automatically with customizable settings:
+- **Application Name**: Customizable app name (default: CAFFEINECRASH)
+- **Application URL**: Auto-detected from request or custom URL
+- **Database Path**: Location of SQLite database (default: data/caffeinecrash.db)
+- **Session Configuration**: Custom session name and lifetime
+- **Debug Mode**: Toggle for development vs production
+
+If a `.env` file already exists, it will be preserved and not overwritten.
+
+### 5. **Installation State Management**
 Installation completion is tracked via the `settings` table:
 ```sql
 SELECT setting_value FROM settings WHERE setting_key = 'installation_complete'
 ```
 This ensures the installation wizard only runs once.
 
-### 5. **Demo Mode Compatibility**
+### 6. **Demo Mode Compatibility**
 Demo users are created with the "demo_" prefix:
 - `demo_patient`
 - `demo_caregiver`
@@ -175,17 +185,20 @@ VALUES ('installation_complete', '1');
 ### For Developers
 When deploying CAFFEINECRASH:
 1. Clone the repository
-2. Copy `.env.example` to `.env`
-3. Create `data` and `sessions` directories
-4. Start the PHP server
-5. Navigate to the URL
-6. Complete the installation wizard
+2. Create `data` and `sessions` directories (optional - created automatically)
+3. Start the PHP server
+4. Navigate to the URL
+5. Complete the installation wizard with admin credentials and configuration
+6. The wizard will create `.env` file automatically with your settings
 
 ### For Users
 1. Access the application URL
-2. Fill in the installation form
-3. Click "Complete Installation"
-4. Start using CAFFEINECRASH!
+2. Fill in the admin account details
+3. Configure application settings (or use the defaults)
+4. Click "Complete Installation"
+5. Start using CAFFEINECRASH!
+
+**Note:** The installation wizard now handles creating the `.env` configuration file automatically. You no longer need to manually copy `.env.example` to `.env`.
 
 ## Troubleshooting
 
@@ -214,3 +227,4 @@ Potential improvements to the installation process:
 - Email configuration during installation
 - Optional sample data creation
 - Installation health check page
+- ~~Environment configuration during installation~~ ✅ **Implemented!**

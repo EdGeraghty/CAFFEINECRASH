@@ -17,10 +17,17 @@ Navigate to: `http://localhost:8000`
   - Username (letters, numbers, underscores, hyphens only)
   - Email address
   - Password (minimum 8 characters)
+- Configure application settings (or use defaults):
+  - Application Name
+  - Application URL (auto-detected)
+  - Database Path
+  - Session Settings
+  - Debug Mode
 - Click "Complete Installation"
+- The wizard creates your `.env` configuration file automatically
 - You'll be logged in automatically as the admin
 
-**Important:** Your admin account is permanent and will remain even when using demo mode.
+**Important:** Your admin account is permanent and will remain even when using demo mode. No need to manually edit `.env` - the wizard handles it!
 
 **OR** want to explore first? After installation, navigate to `/demo.php` to create sample data and try the app without adding your own information.
 

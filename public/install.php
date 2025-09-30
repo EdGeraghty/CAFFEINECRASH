@@ -5,7 +5,13 @@ $installation = new \App\Installation();
 
 // If already installed, redirect to home
 if ($installation->isInstalled()) {
-    redirect('/index.php');
+    // If logged in, go to dashboard, otherwise go to login
+    $auth = new \App\Auth();
+    if ($auth->isLoggedIn()) {
+        redirect('/dashboard.php');
+    } else {
+        redirect('/login.php');
+    }
 }
 
 $error = '';

@@ -26,7 +26,7 @@ class Installation {
     /**
      * Create the first admin user during installation
      */
-    public function createAdminUser(string $username, string $email, string $password): array {
+    public function createAdminUser(string $username, string $email, string $password, array $config = []): array {
         $result = [
             'success' => false,
             'message' => ''
@@ -57,6 +57,15 @@ class Installation {
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $result['message'] = 'Invalid email format';
                 return $result;
+            }
+            
+            // Create .env file if config is provided
+            if (!empty($config)) {
+                $envResult = $this->createEnvFile($config);
+                if (!$envResult['success']) {
+                    $result['message'] = $envResult['message'];
+                    return $result;
+                }
             }
             
             // Create admin user
@@ -95,6 +104,72 @@ class Installation {
             }
         } catch (\Exception $e) {
             $result['message'] = 'Error: ' . $e->getMessage();
+        }
+        
+        return $result;
+    }
+    
+    /**
+     * Create or update .env file with configuration
+     */
+    public function createEnvFile(array $config): array {
+        $result = [
+            'success' => false,
+            'message' => ''
+        ];
+        
+        try {
+            $envPath = PROJECT_ROOT . '/.env';
+            
+            // Check if .env already exists
+            if (file_exists($envPath)) {
+                // Don't overwrite existing .env file
+                $result['success'] = true;
+                $result['message'] = 'Using existing .env configuration';
+                return $result;
+            }
+            
+            // Set defaults for missing values
+            $defaults = [
+                'DB_PATH' => 'data/caffeinecrash.db',
+                'SESSION_NAME' => 'CAFFEINECRASH_SESSION',
+                'SESSION_LIFETIME' => '3600',
+                'APP_NAME' => 'CAFFEINECRASH',
+                'APP_URL' => 'http://localhost:8000',
+                'DEBUG' => 'true',
+                'HASH_ALGO' => 'PASSWORD_ARGON2ID'
+            ];
+            
+            // Merge with provided config
+            $config = array_merge($defaults, $config);
+            
+            // Build .env content
+            $envContent = "# Database Configuration\n";
+            $envContent .= "DB_PATH=" . $config['DB_PATH'] . "\n\n";
+            
+            $envContent .= "# Session Configuration\n";
+            $envContent .= "SESSION_NAME=" . $config['SESSION_NAME'] . "\n";
+            $envContent .= "SESSION_LIFETIME=" . $config['SESSION_LIFETIME'] . "\n\n";
+            
+            $envContent .= "# Application Settings\n";
+            $envContent .= "APP_NAME=" . $config['APP_NAME'] . "\n";
+            $envContent .= "APP_URL=" . $config['APP_URL'] . "\n";
+            $envContent .= "DEBUG=" . $config['DEBUG'] . "\n\n";
+            
+            $envContent .= "# Security\n";
+            $envContent .= "HASH_ALGO=" . $config['HASH_ALGO'] . "\n";
+            
+            // Write to file
+            if (file_put_contents($envPath, $envContent) === false) {
+                $result['message'] = 'Failed to write .env file. Check permissions.';
+                return $result;
+            }
+            
+            $result['success'] = true;
+            $result['message'] = 'Configuration file created successfully';
+            
+        } catch (\Exception $e) {
+            $result['message'] = 'Error creating .env file: ' . $e->getMessage();
         }
         
         return $result;

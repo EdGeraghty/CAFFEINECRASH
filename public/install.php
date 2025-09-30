@@ -17,16 +17,32 @@ if ($installation->isInstalled()) {
 $error = '';
 $success = '';
 
+// Get current URL for default APP_URL
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$host = $_SERVER['HTTP_HOST'] ?? 'localhost:8000';
+$defaultAppUrl = $protocol . '://' . $host;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     $confirmPassword = $_POST['confirm_password'] ?? '';
     
+    // Get configuration values
+    $config = [
+        'APP_NAME' => $_POST['app_name'] ?? 'CAFFEINECRASH',
+        'APP_URL' => $_POST['app_url'] ?? $defaultAppUrl,
+        'DB_PATH' => $_POST['db_path'] ?? 'data/caffeinecrash.db',
+        'SESSION_NAME' => $_POST['session_name'] ?? 'CAFFEINECRASH_SESSION',
+        'SESSION_LIFETIME' => $_POST['session_lifetime'] ?? '3600',
+        'DEBUG' => isset($_POST['debug']) && $_POST['debug'] === '1' ? 'true' : 'false',
+        'HASH_ALGO' => 'PASSWORD_ARGON2ID'
+    ];
+    
     if ($password !== $confirmPassword) {
         $error = 'Passwords do not match';
     } else {
-        $result = $installation->createAdminUser($username, $email, $password);
+        $result = $installation->createAdminUser($username, $email, $password, $config);
         
         if ($result['success']) {
             $success = $result['message'];
@@ -70,11 +86,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php else: ?>
                 <div class="info-box">
                     <h3>👋 Welcome!</h3>
-                    <p>Let's set up your CAFFEINECRASH installation by creating an admin account.</p>
+                    <p>Let's set up your CAFFEINECRASH installation by creating an admin account and configuring your application.</p>
                     <p><strong>Important:</strong> This admin account will remain permanent, even if you use demo mode.</p>
                 </div>
                 
                 <form method="POST">
+                    <h3>Admin Account</h3>
+                    
                     <div class="form-group">
                         <label for="username">Admin Username</label>
                         <input type="text" id="username" name="username" required 
@@ -104,6 +122,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                placeholder="Re-enter password">
                     </div>
                     
+                    <h3 style="margin-top: 30px;">Application Configuration</h3>
+                    
+                    <div class="form-group">
+                        <label for="app_name">Application Name</label>
+                        <input type="text" id="app_name" name="app_name" 
+                               value="CAFFEINECRASH" 
+                               placeholder="CAFFEINECRASH">
+                        <small>The name displayed in the application</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="app_url">Application URL</label>
+                        <input type="text" id="app_url" name="app_url" 
+                               value="<?= sanitize($defaultAppUrl) ?>" 
+                               placeholder="http://localhost:8000">
+                        <small>The base URL where the application is hosted</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="db_path">Database Path</label>
+                        <input type="text" id="db_path" name="db_path" 
+                               value="data/caffeinecrash.db" 
+                               placeholder="data/caffeinecrash.db">
+                        <small>Relative path to the SQLite database file (will be created automatically)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="session_name">Session Name</label>
+                        <input type="text" id="session_name" name="session_name" 
+                               value="CAFFEINECRASH_SESSION" 
+                               placeholder="CAFFEINECRASH_SESSION">
+                        <small>Unique session identifier for this application</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="session_lifetime">Session Lifetime (seconds)</label>
+                        <input type="number" id="session_lifetime" name="session_lifetime" 
+                               value="3600" 
+                               min="300" 
+                               placeholder="3600">
+                        <small>How long a user session remains active (default: 1 hour)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="debug" value="1" checked>
+                            Enable Debug Mode
+                        </label>
+                        <small>Show detailed error messages (disable in production)</small>
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary">Complete Installation</button>
                 </form>
                 
@@ -111,6 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <h4>📋 After Installation</h4>
                     <ul style="text-align: left; margin-left: 20px;">
                         <li>You'll be logged in automatically as the admin user</li>
+                        <li>Configuration will be saved to <code>.env</code> file</li>
                         <li>You can manage users via the Admin Panel</li>
                         <li>Demo mode can be used without affecting your admin account</li>
                         <li>Additional users can register if registration is enabled</li>
@@ -147,11 +217,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin: 5px 0;
         }
         
+        .info-box code {
+            background: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            color: #d32f2f;
+        }
+        
         .form-group small {
             display: block;
             margin-top: 5px;
             color: #666;
             font-size: 0.9em;
+        }
+        
+        form h3 {
+            color: #4CAF50;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        form h3:first-of-type {
+            margin-top: 0;
         }
         
         .success {

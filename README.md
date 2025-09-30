@@ -6,6 +6,7 @@ A "vibecoded" progressive web app for medication and health tracking
 - **User Authentication**: Secure login and registration system
 - **Admin Panel**: Comprehensive administration interface with:
   - User management (view, edit, activate/deactivate, delete users)
+  - System settings (enable/disable registration, etc.)
   - TOTP-based multi-factor authentication (MFA) for admin accounts
   - System logs with filtering and search
   - Analytics dashboard with usage metrics

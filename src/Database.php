@@ -116,5 +116,17 @@ class Database {
         $db->exec("CREATE INDEX IF NOT EXISTS idx_logs_level ON logs(level)");
         $db->exec("CREATE INDEX IF NOT EXISTS idx_logs_created_at ON logs(created_at)");
         $db->exec("CREATE INDEX IF NOT EXISTS idx_logs_user_id ON logs(user_id)");
+        
+        // Settings table for system configuration
+        $db->exec("CREATE TABLE IF NOT EXISTS settings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            setting_key VARCHAR(100) UNIQUE NOT NULL,
+            setting_value TEXT NOT NULL,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )");
+        
+        // Initialize default settings
+        $stmt = $db->prepare("INSERT OR IGNORE INTO settings (setting_key, setting_value) VALUES (?, ?)");
+        $stmt->execute(['registration_enabled', '1']);
     }
 }

@@ -5,23 +5,30 @@ if ($auth->isLoggedIn()) {
     redirect('/dashboard.php');
 }
 
+$settings = new \App\Settings();
+$registrationEnabled = $settings->isRegistrationEnabled();
+
 $error = '';
 $success = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $confirmPassword = $_POST['confirm_password'] ?? '';
-    
-    if ($password !== $confirmPassword) {
-        $error = 'Passwords do not match';
-    } elseif (strlen($password) < 6) {
-        $error = 'Password must be at least 6 characters';
-    } elseif ($auth->register($username, $email, $password)) {
-        $success = 'Registration successful! You can now login.';
+    if (!$registrationEnabled) {
+        $error = 'Registration is currently disabled by the administrator';
     } else {
-        $error = 'Username or email already exists';
+        $username = $_POST['username'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
+        
+        if ($password !== $confirmPassword) {
+            $error = 'Passwords do not match';
+        } elseif (strlen($password) < 6) {
+            $error = 'Password must be at least 6 characters';
+        } elseif ($auth->register($username, $email, $password)) {
+            $success = 'Registration successful! You can now login.';
+        } else {
+            $error = 'Username or email already exists';
+        }
     }
 }
 ?>
@@ -46,6 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php if ($success): ?>
                 <div class="success"><?= sanitize($success) ?></div>
             <?php endif; ?>
+            <?php if (!$registrationEnabled): ?>
+                <div class="error">Registration is currently disabled by the administrator. Please contact the system administrator if you need an account.</div>
+            <?php else: ?>
             <form method="POST">
                 <div class="form-group">
                     <label for="username">Username</label>
@@ -65,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
+            <?php endif; ?>
             <p class="text-center">Already have an account? <a href="/login.php">Login</a></p>
             <p class="text-center">Want to try a demo first? <a href="/demo.php">Demo Mode</a></p>
         </div>

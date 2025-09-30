@@ -1,0 +1,31 @@
+# Vendor directories (keeping our simple autoloader)
+# /vendor/
+
+# Environment files
+.env
+.env.local
+
+# Database files
+*.db
+*.sqlite
+
+# Session files
+/sessions/
+
+# Log files
+*.log
+/logs/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+/tmp/

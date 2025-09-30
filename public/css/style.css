@@ -1,0 +1,373 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+/* Navigation */
+.navbar {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-brand a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-menu li a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-menu li a:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    margin-bottom: 1rem;
+    color: #4CAF50;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group input[type="datetime-local"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+.btn-secondary {
+    background-color: #2196F3;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #0b7dda;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #da190b;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+/* Messages */
+.error {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #c62828;
+}
+
+.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #2e7d32;
+}
+
+/* Auth Form */
+.auth-form {
+    max-width: 400px;
+    margin: 4rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.auth-form h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
+}
+
+.auth-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.text-center {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Dashboard */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+/* Row Layout */
+.row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.col-md-6 {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Medication List */
+.medication-list,
+.health-data-list,
+.reminder-list,
+.share-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.medication-item,
+.health-data-item,
+.reminder-item,
+.share-item {
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.medication-item h3 {
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
+}
+
+.medication-item p {
+    margin-bottom: 0.5rem;
+}
+
+.medication-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Health Data */
+.health-summary {
+    margin-top: 2rem;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.metric {
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.metric-label {
+    display: block;
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.metric-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.data-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.data-date {
+    font-size: 0.875rem;
+    color: #666;
+}
+
+.data-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4CAF50;
+    margin: 0.5rem 0;
+}
+
+.data-notes {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+/* Reminders */
+.reminder-item.completed {
+    opacity: 0.6;
+    background-color: #f5f5f5;
+}
+
+.reminder-actions {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.upcoming-reminders {
+    margin-top: 2rem;
+}
+
+.reminder-list {
+    list-style: none;
+}
+
+.reminder-list li {
+    padding: 1rem;
+    border-left: 4px solid #4CAF50;
+    background: #f5f5f5;
+    margin-bottom: 0.5rem;
+}
+
+/* Share */
+.shared-content {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.shared-content h4 {
+    color: #4CAF50;
+    margin-bottom: 0.5rem;
+}
+
+.shared-content ul {
+    margin-left: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    
+    .row {
+        flex-direction: column;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}

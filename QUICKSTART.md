@@ -16,6 +16,20 @@ Navigate to: `http://localhost:8000`
 - Fill in username, email, and password
 - Login with your credentials
 
+**OR** try the demo mode first! Navigate to `/demo.php` to create sample data and explore the app without adding your own information.
+
+## Demo Mode 🎭
+
+Want to see what CAFFEINECRASH can do before adding your own data?
+
+1. Navigate to `http://localhost:8000/demo.php`
+2. Click "Create Demo Data"
+3. Login with demo credentials:
+   - Username: `demo_patient` or `demo_caregiver`
+   - Password: `demo123`
+
+You'll get instant access to sample medications, health data, and reminders!
+
 ## Main Features
 
 ### 📋 Medications

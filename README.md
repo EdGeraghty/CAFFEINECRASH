@@ -57,6 +57,24 @@ php -S localhost:8000
 
 5. Open your browser and navigate to `http://localhost:8000`
 
+## Demo Mode
+
+Want to try CAFFEINECRASH without adding your own data first? Use the demo mode!
+
+1. Navigate to `http://localhost:8000/demo.php`
+2. Click "Create Demo Data"
+3. Use the provided credentials to login:
+   - **Username**: `demo_patient` or `demo_caregiver`
+   - **Password**: `demo123`
+
+Demo mode creates:
+- Sample users with realistic data
+- Multiple medications with dosages and prescriber information
+- Health data entries spanning 30 days (weight, blood pressure, heart rate, blood sugar, GAD-7 scores)
+- Upcoming and completed reminders
+
+You can clear demo data anytime from the same page.
+
 ## Usage
 
 ### First Time Setup

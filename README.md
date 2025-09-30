@@ -4,6 +4,12 @@ A "vibecoded" progressive web app for medication and health tracking
 ## Features
 
 - **User Authentication**: Secure login and registration system
+- **Admin Panel**: Comprehensive administration interface with:
+  - User management (view, edit, activate/deactivate, delete users)
+  - TOTP-based multi-factor authentication (MFA) for admin accounts
+  - System logs with filtering and search
+  - Analytics dashboard with usage metrics
+  - Extensible architecture for future admin features
 - **Medication Management**: Upload, store, and track medications with dosages, frequencies, and prescriber information
 - **Health Data Tracking**: Record and monitor various health metrics including:
   - GAD-7 scores (anxiety assessment)
@@ -99,6 +105,21 @@ php -S localhost:8000
    - Complete Summary
 4. Click "Share" to send
 
+### Admin Panel
+
+For admin users, access the admin panel by clicking "Admin" in the navigation menu.
+
+See [ADMIN.md](ADMIN.md) for complete admin panel documentation including:
+- User management
+- System logs
+- Analytics
+- Multi-factor authentication (TOTP)
+
+To make a user an admin:
+```bash
+sqlite3 public/data/caffeinecrash.db "UPDATE users SET is_admin = 1 WHERE username = 'your_username';"
+```
+
 ## Security Features
 
 - Passwords are hashed using Argon2ID
@@ -106,15 +127,18 @@ php -S localhost:8000
 - XSS protection via output sanitization
 - Session-based authentication
 - User data isolation
+- Multi-factor authentication (TOTP) for admin accounts
+- Comprehensive logging for security auditing
 
 ## Database Schema
 
 The application uses SQLite with the following tables:
-- `users`: User account information
+- `users`: User account information (with admin and active status)
 - `medications`: Medication records
 - `health_data`: Health metrics and measurements
 - `reminders`: Scheduled reminders
 - `shares`: Shared information between users
+- `logs`: System and application logs for admin monitoring
 
 ## Progressive Web App
 

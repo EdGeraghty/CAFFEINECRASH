@@ -1,5 +1,5 @@
-# Vendor directories
-/vendor/
+# Vendor directories (keeping our simple autoloader)
+# /vendor/
 
 # Environment files
 .env

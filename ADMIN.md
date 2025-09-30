@@ -56,6 +56,13 @@ sqlite3 public/data/caffeinecrash.db "UPDATE users SET is_admin = 1 WHERE userna
 - **Log Statistics**: Distribution of logs by severity level
 - **Database Size**: Current database file size
 
+### System Settings
+- **Registration Control**: Enable or disable new user registration
+  - When disabled, the registration page shows a message that registration is currently closed
+  - Existing users can still log in normally
+  - Changes are logged in the system logs
+  - Useful for limiting access or during maintenance periods
+
 ### MFA Settings (TOTP)
 - **Enable TOTP**: Set up two-factor authentication for your admin account
 - **QR Code**: Scan with any TOTP app (Google Authenticator, Authy, Microsoft Authenticator, etc.)
@@ -110,6 +117,14 @@ CREATE TABLE logs (
     user_agent TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Settings table
+CREATE TABLE settings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    setting_key VARCHAR(100) UNIQUE NOT NULL,
+    setting_value TEXT NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 ```
 
 ### New PHP Classes
@@ -117,12 +132,14 @@ CREATE TABLE logs (
 - **AdminUser**: User management operations
 - **Logger**: System logging with multiple severity levels
 - **Analytics**: Usage statistics and metrics calculation
+- **Settings**: System settings management (registration control, etc.)
 
 ### Admin Routes
 - `/admin/` - Main dashboard
 - `/admin/users.php` - User management
 - `/admin/logs.php` - System logs viewer
 - `/admin/analytics.php` - Analytics dashboard
+- `/admin/settings.php` - System settings (registration control)
 - `/admin/mfa-settings.php` - TOTP configuration
 - `/admin/totp-verify.php` - MFA verification page
 

@@ -58,6 +58,14 @@ php -S localhost:8000
 
 5. Open your browser and navigate to `http://localhost:8000`
 
+6. **Complete the installation wizard:**
+   - You'll be automatically redirected to the installation page
+   - Create your admin account with a username, email, and password (minimum 8 characters)
+   - Click "Complete Installation"
+   - You'll be logged in automatically as the admin user
+
+**Important:** The admin account created during installation is permanent and will remain even when using demo mode.
+
 ## Demo Mode
 
 Want to try CAFFEINECRASH without adding your own data first? Use the demo mode!

@@ -1,6 +1,12 @@
 <?php 
 require_once 'bootstrap.php';
 
+// Check if installation is complete
+$installation = new \App\Installation();
+if (!$installation->isInstalled()) {
+    redirect('/install.php');
+}
+
 $demoData = new \App\DemoData();
 $message = '';
 $error = '';

@@ -6,7 +6,7 @@ class Database {
     
     public static function getInstance(): \PDO {
         if (self::$instance === null) {
-            $dbPath = $_ENV['DB_PATH'] ?? 'data/caffeinecrash.db';
+            $dbPath = $_ENV['DB_PATH'];
             $dbDir = dirname($dbPath);
             
             if (!is_dir($dbDir)) {
@@ -32,6 +32,9 @@ class Database {
             username VARCHAR(100) UNIQUE NOT NULL,
             email VARCHAR(255) UNIQUE NOT NULL,
             password_hash VARCHAR(255) NOT NULL,
+            is_admin BOOLEAN DEFAULT 0,
+            is_active BOOLEAN DEFAULT 1,
+            totp_secret VARCHAR(32),
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )");
@@ -96,5 +99,22 @@ class Database {
         $db->exec("CREATE INDEX IF NOT EXISTS idx_reminders_user_id ON reminders(user_id)");
         $db->exec("CREATE INDEX IF NOT EXISTS idx_shares_owner_id ON shares(owner_id)");
         $db->exec("CREATE INDEX IF NOT EXISTS idx_shares_shared_with ON shares(shared_with_user_id)");
+        
+        // Logs table for admin panel
+        $db->exec("CREATE TABLE IF NOT EXISTS logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            level VARCHAR(20) NOT NULL,
+            message TEXT NOT NULL,
+            context TEXT,
+            user_id INTEGER,
+            ip_address VARCHAR(45),
+            user_agent TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+        )");
+        
+        $db->exec("CREATE INDEX IF NOT EXISTS idx_logs_level ON logs(level)");
+        $db->exec("CREATE INDEX IF NOT EXISTS idx_logs_created_at ON logs(created_at)");
+        $db->exec("CREATE INDEX IF NOT EXISTS idx_logs_user_id ON logs(user_id)");
     }
 }

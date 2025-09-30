@@ -9,6 +9,12 @@
             <li><a href="/health.php">Health Data</a></li>
             <li><a href="/reminders.php">Reminders</a></li>
             <li><a href="/share.php">Share</a></li>
+            <?php 
+            $auth = new \App\Auth();
+            if ($auth->isAdmin()): 
+            ?>
+                <li><a href="/admin/">Admin</a></li>
+            <?php endif; ?>
             <li><a href="/logout.php">Logout</a></li>
         </ul>
     </nav>

@@ -8,6 +8,8 @@
 # Database files
 *.db
 *.sqlite
+/data/
+/public/data/
 
 # Session files
 /sessions/

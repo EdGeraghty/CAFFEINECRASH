@@ -11,12 +11,18 @@ php -S localhost:8000
 ### 2. Open Your Browser
 Navigate to: `http://localhost:8000`
 
-### 3. Register & Login
-- Click "Register" to create a new account
-- Fill in username, email, and password
-- Login with your credentials
+### 3. Complete Installation & Setup
+- You'll be automatically redirected to the installation wizard
+- Create your admin account with:
+  - Username (letters, numbers, underscores, hyphens only)
+  - Email address
+  - Password (minimum 8 characters)
+- Click "Complete Installation"
+- You'll be logged in automatically as the admin
 
-**OR** try the demo mode first! Navigate to `/demo.php` to create sample data and explore the app without adding your own information.
+**Important:** Your admin account is permanent and will remain even when using demo mode.
+
+**OR** want to explore first? After installation, navigate to `/demo.php` to create sample data and try the app without adding your own information.
 
 ## Demo Mode 🎭
 

@@ -6,9 +6,17 @@ The CAFFEINECRASH admin panel provides comprehensive system management capabilit
 
 ## Accessing the Admin Panel
 
-### Making a User an Admin
+### Initial Admin Account
 
-By default, newly registered users are not admins. To make a user an admin, update the database directly:
+The first admin account is created during the installation wizard when you first set up CAFFEINECRASH. This account:
+- Is created on first launch at `/install.php`
+- Has full administrative privileges
+- Persists permanently, even when demo mode is used
+- Cannot be deleted through the demo data clearing process
+
+### Making Additional Users Admin
+
+To make existing users admins, update the database directly:
 
 ```bash
 sqlite3 public/data/caffeinecrash.db "UPDATE users SET is_admin = 1 WHERE username = 'your_username';"

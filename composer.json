@@ -1,6 +1,6 @@
 {
     "name": "edgeraghty/caffeinecrash",
-    "description": "A progressive web app for medication and health tracking",
+    "description": "A progressive web app for medication and health tracking #yolo",
     "type": "project",
     "require": {
         "php": "^8.4"

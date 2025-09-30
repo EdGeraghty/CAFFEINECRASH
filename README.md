@@ -1,5 +1,5 @@
 # CAFFEINECRASH
-A progressive web app for medication and health tracking
+A "vibecoded" progressive web app for medication and health tracking
 
 ## Features
 
@@ -149,8 +149,8 @@ CAFFEINECRASH/
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is open source and available under the [YOLO Public License (YPL) v0.12.34-hunter.2](https://github.com/YOLOSecFW/YoloSec-Framework/blob/master/YOLO%20Public%20License).
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+This is LLM-only!

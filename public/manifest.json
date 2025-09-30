@@ -1,7 +1,7 @@
 {
     "name": "CAFFEINECRASH",
     "short_name": "CAFFEINECRASH",
-    "description": "A progressive web app for medication and health tracking",
+    "description": "A progressive web app for medication and health tracking #yolo",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#ffffff",

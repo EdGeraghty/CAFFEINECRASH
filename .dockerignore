@@ -1,0 +1,44 @@
+# Git and version control
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+ADMIN.md
+INSTALLATION.md
+QUICKSTART.md
+
+# Local environment files
+.env
+.env.local
+!.env.production
+
+# Local data and sessions (will be mounted as volumes)
+public/data/*
+sessions/*
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+
+# Don't ignore docker config directory (we need it for build)
+!docker/

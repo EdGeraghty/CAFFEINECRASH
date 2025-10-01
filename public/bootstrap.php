@@ -21,7 +21,8 @@ if (file_exists($envFile)) {
 }
 
 // Start session
-session_save_path(PROJECT_ROOT . '/sessions');
+$sessionPath = $_ENV['SESSION_PATH'] ?? PROJECT_ROOT . '/sessions';
+session_save_path($sessionPath);
 if (!is_dir(session_save_path())) {
     mkdir(session_save_path(), 0755, true);
 }

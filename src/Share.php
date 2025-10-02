@@ -9,19 +9,23 @@ class Share {
     }
     
     public function create(int $ownerId, int $sharedWithUserId, string $shareType, array $data): int|false {
-        $stmt = $this->db->prepare("
-            INSERT INTO shares (owner_id, shared_with_user_id, share_type, data)
-            VALUES (:owner_id, :shared_with_user_id, :share_type, :data)
-        ");
-        
-        $result = $stmt->execute([
-            'owner_id' => $ownerId,
-            'shared_with_user_id' => $sharedWithUserId,
-            'share_type' => $shareType,
-            'data' => json_encode($data)
-        ]);
-        
-        return $result ? (int)$this->db->lastInsertId() : false;
+        try {
+            $stmt = $this->db->prepare("
+                INSERT INTO shares (owner_id, shared_with_user_id, share_type, data)
+                VALUES (:owner_id, :shared_with_user_id, :share_type, :data)
+            ");
+            
+            $result = $stmt->execute([
+                'owner_id' => $ownerId,
+                'shared_with_user_id' => $sharedWithUserId,
+                'share_type' => $shareType,
+                'data' => json_encode($data)
+            ]);
+            
+            return $result ? (int)$this->db->lastInsertId() : false;
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
     
     public function getSharedWithMe(int $userId): array {
